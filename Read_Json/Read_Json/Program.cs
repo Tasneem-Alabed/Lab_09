@@ -34,19 +34,21 @@ namespace Read_Json
             Console.WriteLine("----------------------------------------");
             Console.WriteLine("*****************************************");
             Console.WriteLine("----------------------------------------");
+            
+
+
+            var Data_Neighborhoods_Querys = (from f in Object.features
+                                           where !string.IsNullOrEmpty(f.properties.neighborhood)
+                                           select f.properties.neighborhood).Distinct();
+
             var datedNeighborhoods = Object.features
                 .Select(f => f.properties.neighborhood)
-                .Where(n => !string.IsNullOrEmpty(n))
-                .Distinct();
+                .Where(n => !string.IsNullOrEmpty(n)).Distinct();
+
             Console.WriteLine("Consolidated neighborhoods:");
             Console.WriteLine(string.Join("\t ", datedNeighborhoods));
             Console.WriteLine("Total " + datedNeighborhoods.Count() + " neighborhoods");
 
-
-            var Data_Neighborhoods_Querys = (from f in Object.features
-                                           let n = f.properties.neighborhood
-                                           where !string.IsNullOrEmpty(n)
-                                           select n).Distinct();
             Console.WriteLine("Consolidated neighborhoods (using query syntax):");
             Console.WriteLine(string.Join("\t ", Data_Neighborhoods_Querys));
 
